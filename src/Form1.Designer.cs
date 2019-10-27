@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.formulaDisplayArea = new System.Windows.Forms.Label();
-            this.resultDisplayArea = new System.Windows.Forms.TextBox();
+            this.resultDispArea = new System.Windows.Forms.TextBox();
             this.CEButton = new System.Windows.Forms.Button();
             this.CButton = new System.Windows.Forms.Button();
             this.backSpaceButton = new System.Windows.Forms.Button();
@@ -47,37 +46,26 @@
             this.button3 = new System.Windows.Forms.Button();
             this.sumButton = new System.Windows.Forms.Button();
             this.signToggleButton = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
+            this.button0 = new System.Windows.Forms.Button();
             this.decimalPointButton = new System.Windows.Forms.Button();
             this.resultDisplayButton = new System.Windows.Forms.Button();
+            this.formulaDispArea = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // formulaDisplayArea
+            // resultDispArea
             // 
-            this.formulaDisplayArea.AutoSize = true;
-            this.formulaDisplayArea.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.formulaDisplayArea.ForeColor = System.Drawing.SystemColors.Control;
-            this.formulaDisplayArea.Location = new System.Drawing.Point(314, 22);
-            this.formulaDisplayArea.Name = "formulaDisplayArea";
-            this.formulaDisplayArea.Size = new System.Drawing.Size(60, 15);
-            this.formulaDisplayArea.TabIndex = 0;
-            this.formulaDisplayArea.Text = "0+1-3*4/5";
-            this.formulaDisplayArea.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // resultDisplayArea
-            // 
-            this.resultDisplayArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
-            this.resultDisplayArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.resultDisplayArea.Cursor = System.Windows.Forms.Cursors.Default;
-            this.resultDisplayArea.Enabled = false;
-            this.resultDisplayArea.Font = new System.Drawing.Font("Yu Gothic UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.resultDisplayArea.ForeColor = System.Drawing.SystemColors.Window;
-            this.resultDisplayArea.Location = new System.Drawing.Point(12, 40);
-            this.resultDisplayArea.Name = "resultDisplayArea";
-            this.resultDisplayArea.ReadOnly = true;
-            this.resultDisplayArea.Size = new System.Drawing.Size(282, 54);
-            this.resultDisplayArea.TabIndex = 2;
-            this.resultDisplayArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.resultDispArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
+            this.resultDispArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.resultDispArea.Cursor = System.Windows.Forms.Cursors.Default;
+            this.resultDispArea.Enabled = false;
+            this.resultDispArea.Font = new System.Drawing.Font("Yu Gothic UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.resultDispArea.ForeColor = System.Drawing.SystemColors.Window;
+            this.resultDispArea.Location = new System.Drawing.Point(12, 40);
+            this.resultDispArea.Name = "resultDispArea";
+            this.resultDispArea.ReadOnly = true;
+            this.resultDispArea.Size = new System.Drawing.Size(282, 54);
+            this.resultDispArea.TabIndex = 2;
+            this.resultDispArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CEButton
             // 
@@ -309,18 +297,19 @@
             this.signToggleButton.UseVisualStyleBackColor = true;
             this.signToggleButton.Click += new System.EventHandler(this.signToggleButton_Click);
             // 
-            // button17
+            // button0
             // 
-            this.button17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button17.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button17.Location = new System.Drawing.Point(84, 302);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(66, 43);
-            this.button17.TabIndex = 20;
-            this.button17.Text = "CE";
-            this.button17.UseVisualStyleBackColor = false;
+            this.button0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.button0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button0.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button0.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.button0.Location = new System.Drawing.Point(84, 302);
+            this.button0.Name = "button0";
+            this.button0.Size = new System.Drawing.Size(66, 43);
+            this.button0.TabIndex = 20;
+            this.button0.Text = "0";
+            this.button0.UseVisualStyleBackColor = false;
+            this.button0.Click += new System.EventHandler(this.button0_Click);
             // 
             // decimalPointButton
             // 
@@ -348,33 +337,52 @@
             this.resultDisplayButton.UseVisualStyleBackColor = true;
             this.resultDisplayButton.Click += new System.EventHandler(this.resultDisplayButton_Click);
             // 
+            // formulaDispArea
+            // 
+            this.formulaDispArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
+            this.formulaDispArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.formulaDispArea.Cursor = System.Windows.Forms.Cursors.Default;
+            this.formulaDispArea.Enabled = false;
+            this.formulaDispArea.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.formulaDispArea.ForeColor = System.Drawing.SystemColors.Window;
+            this.formulaDispArea.Location = new System.Drawing.Point(12, 12);
+            this.formulaDispArea.Name = "formulaDispArea";
+            this.formulaDispArea.ReadOnly = true;
+            this.formulaDispArea.Size = new System.Drawing.Size(282, 23);
+            this.formulaDispArea.TabIndex = 23;
+            this.formulaDispArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
             this.ClientSize = new System.Drawing.Size(305, 354);
-            this.Controls.Add(this.resultDisplayButton);
+            this.Controls.Add(this.formulaDispArea);
+            this.Controls.Add(this.resultDispArea);
             this.Controls.Add(this.decimalPointButton);
-            this.Controls.Add(this.button17);
+            this.Controls.Add(this.button0);
             this.Controls.Add(this.signToggleButton);
-            this.Controls.Add(this.sumButton);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.button7);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.sumButton);
             this.Controls.Add(this.minButton);
             this.Controls.Add(this.multiButton);
             this.Controls.Add(this.divButton);
-            this.Controls.Add(this.backSpaceButton);
             this.Controls.Add(this.CButton);
             this.Controls.Add(this.CEButton);
-            this.Controls.Add(this.resultDisplayArea);
+            this.Controls.Add(this.backSpaceButton);
+            this.Controls.Add(this.resultDisplayButton);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(321, 393);
+            this.MinimumSize = new System.Drawing.Size(321, 393);
             this.Name = "Form1";
             this.Text = "simple calculator";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -385,26 +393,26 @@
 
         #endregion
 
-        private System.Windows.Forms.Label formulaDisplayArea;
-        private System.Windows.Forms.TextBox resultDisplayArea;
+        private System.Windows.Forms.TextBox formulaDispArea;
+        private System.Windows.Forms.TextBox resultDispArea;
         private System.Windows.Forms.Button CEButton;
         private System.Windows.Forms.Button CButton;
         private System.Windows.Forms.Button backSpaceButton;
-        private System.Windows.Forms.Button divButton;
-        private System.Windows.Forms.Button multiButton;
+        private System.Windows.Forms.Button sumButton;
         private System.Windows.Forms.Button minButton;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button multiButton;
+        private System.Windows.Forms.Button divButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button sumButton;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button0;
         private System.Windows.Forms.Button signToggleButton;
-        private System.Windows.Forms.Button button17;
         private System.Windows.Forms.Button decimalPointButton;
         private System.Windows.Forms.Button resultDisplayButton;
     }
