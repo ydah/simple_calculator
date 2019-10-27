@@ -59,12 +59,13 @@
             this.resultDispArea.Cursor = System.Windows.Forms.Cursors.Default;
             this.resultDispArea.Enabled = false;
             this.resultDispArea.Font = new System.Drawing.Font("Yu Gothic UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.resultDispArea.ForeColor = System.Drawing.SystemColors.Window;
+            this.resultDispArea.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.resultDispArea.Location = new System.Drawing.Point(12, 40);
             this.resultDispArea.Name = "resultDispArea";
             this.resultDispArea.ReadOnly = true;
             this.resultDispArea.Size = new System.Drawing.Size(282, 54);
             this.resultDispArea.TabIndex = 2;
+            this.resultDispArea.Text = "0";
             this.resultDispArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CEButton
@@ -384,6 +385,8 @@
             this.MaximumSize = new System.Drawing.Size(321, 393);
             this.MinimumSize = new System.Drawing.Size(321, 393);
             this.Name = "Form1";
+            this.Opacity = 0.9D;
+            this.ShowIcon = false;
             this.Text = "simple calculator";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

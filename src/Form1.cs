@@ -12,6 +12,8 @@ namespace simple_calculator
 {
     public partial class Form1 : Form
     {
+        private bool isnext = false;
+
         public Form1()
         {
             InitializeComponent();
@@ -24,63 +26,65 @@ namespace simple_calculator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("1");
+            appendResultDispArea("1");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("2");
+            appendResultDispArea("2");
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("3");
+            appendResultDispArea("3");
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("4");
+            appendResultDispArea("4");
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("5");
+            appendResultDispArea("5");
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("6");
+            appendResultDispArea("6");
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("7");
+            appendResultDispArea("7");
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("8");
+            appendResultDispArea("8");
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            appendFormulaDisplayArea("9");
+            appendResultDispArea("9");
         }
 
         private void button0_Click(object sender, EventArgs e)
         {
-            if (formulaDispArea.Text.Length == 0)
+            if (resultDispArea.Text.Length == 0)
                 return;
 
-            appendFormulaDisplayArea("0");
+            appendResultDispArea("0");
         }
 
         private void sumButton_Click(object sender, EventArgs e)
         {
-            if (formulaDispArea.Text.Length == 0)
+            if (resultDispArea.Text.Length == 1)
                 return;
 
+            appendFormulaDisplayArea(resultDispArea.Text);
             appendFormulaDisplayArea("+");
+            calcResult();
         }
 
         private void minButton_Click(object sender, EventArgs e)
@@ -110,20 +114,24 @@ namespace simple_calculator
 
         private void CEButton_Click(object sender, EventArgs e)
         {
-
+            resultDispArea.Text = "0";
+            formulaDispArea.ResetText();
         }
 
         private void CButton_Click(object sender, EventArgs e)
         {
-            formulaDispArea.ResetText();
+            resultDispArea.Text = "0";
         }
 
         private void backSpaceButton_Click(object sender, EventArgs e)
         {
-            if (formulaDispArea.Text.Length == 0)
+            if (resultDispArea.Text.Length <= 1)
+            {
+                resultDispArea.Text = "0";
                 return;
+            }
 
-            formulaDispArea.Text = formulaDispArea.Text.Remove(formulaDispArea.Text.Length - 1);
+            resultDispArea.Text = resultDispArea.Text.Remove(resultDispArea.Text.Length - 1);
         }
 
         private void resultDisplayButton_Click(object sender, EventArgs e)
@@ -131,6 +139,37 @@ namespace simple_calculator
             if (formulaDispArea.Text.Length == 0)
                 return;
 
+            appendFormulaDisplayArea(resultDispArea.Text);
+            calcResult();
+            formulaDispArea.ResetText();
+        }
+
+        private void appendResultDispArea(string str)
+        {
+            if (isnext)
+            {
+                resultDispArea.Text = str;
+                isnext = false;
+                return;
+            }
+
+            if ((resultDispArea.Text.Length == 1) && (resultDispArea.Text == "0"))
+            {
+                resultDispArea.Text = str;
+            }
+            else
+            {
+                resultDispArea.AppendText(str);
+            }
+        }
+
+        private void appendFormulaDisplayArea(string chars)
+        {
+            formulaDispArea.AppendText(chars);
+        }
+
+        private void calcResult()
+        {
             string[] split_values = formulaDispArea.Text.Split('+');
             var list = new List<string>();
             list.AddRange(split_values);
@@ -160,11 +199,7 @@ namespace simple_calculator
                 return;
             }
             resultDispArea.Text = result.ToString();
-        }
-
-        private void appendFormulaDisplayArea(string character)
-        {
-            formulaDispArea.AppendText(character);
+            isnext = true;
         }
     }
 }
