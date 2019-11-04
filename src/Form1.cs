@@ -8,11 +8,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+enum CalcType
+{
+    Undefined = -1,
+    Sum = 0,
+    Minus,
+    Times,
+    Divide
+};
+
 namespace simple_calculator
 {
     public partial class Form1 : Form
     {
+        private Int64 calc_res = 0;
+        private CalcType calc_type = CalcType.Undefined;
         private bool isnext = false;
+        private bool isfirst = true;
+
 
         public Form1()
         {
@@ -79,27 +92,62 @@ namespace simple_calculator
 
         private void sumButton_Click(object sender, EventArgs e)
         {
-            if (resultDispArea.Text.Length == 1)
-                return;
-
+            calc_type = CalcType.Sum;
             appendFormulaDisplayArea(resultDispArea.Text);
             appendFormulaDisplayArea("+");
+            if (isfirst)
+            {
+                calc_res = Convert.ToInt64(resultDispArea.Text);
+                isnext = true;
+                isfirst = false;
+                return;
+            }
             calcResult();
         }
 
         private void minButton_Click(object sender, EventArgs e)
         {
-
+            calc_type = CalcType.Minus;
+            appendFormulaDisplayArea(resultDispArea.Text);
+            appendFormulaDisplayArea("-");
+            if (isfirst)
+            {
+                calc_res = Convert.ToInt64(resultDispArea.Text);
+                isnext = true;
+                isfirst = false;
+                return;
+            }
+            calcResult();
         }
 
         private void multiButton_Click(object sender, EventArgs e)
         {
-
+            calc_type = CalcType.Times;
+            appendFormulaDisplayArea(resultDispArea.Text);
+            appendFormulaDisplayArea("*");
+            if (isfirst)
+            {
+                calc_res = Convert.ToInt64(resultDispArea.Text);
+                isnext = true;
+                isfirst = false;
+                return;
+            }
+            calcResult();
         }
 
         private void divButton_Click(object sender, EventArgs e)
         {
-
+            calc_type = CalcType.Divide;
+            appendFormulaDisplayArea(resultDispArea.Text);
+            appendFormulaDisplayArea("/");
+            if (isfirst)
+            {
+                calc_res = Convert.ToInt64(resultDispArea.Text);
+                isnext = true;
+                isfirst = false;
+                return;
+            }
+            calcResult();
         }
 
         private void signToggleButton_Click(object sender, EventArgs e)
@@ -116,6 +164,8 @@ namespace simple_calculator
         {
             resultDispArea.Text = "0";
             formulaDispArea.ResetText();
+            calc_res = 0;
+            isfirst = true;
         }
 
         private void CButton_Click(object sender, EventArgs e)
@@ -142,6 +192,8 @@ namespace simple_calculator
             appendFormulaDisplayArea(resultDispArea.Text);
             calcResult();
             formulaDispArea.ResetText();
+            calc_res = 0;
+            isfirst = true;
         }
 
         private void appendResultDispArea(string str)
@@ -170,21 +222,24 @@ namespace simple_calculator
 
         private void calcResult()
         {
-            string[] split_values = formulaDispArea.Text.Split('+');
-            var list = new List<string>();
-            list.AddRange(split_values);
-
-            long result = 0;
-            try
-            {
-                checked
-                {
-                    foreach (string value in list)
-                    {
-                        if (value == "")
-                            continue;
-
-                        result += Convert.ToInt64(value);
+            try {
+                checked {
+                    switch (calc_type) {
+                        case CalcType.Sum:
+                            calc_res += Convert.ToInt64(resultDispArea.Text);
+                            break;
+                        case CalcType.Minus:
+                            calc_res -= Convert.ToInt64(resultDispArea.Text);
+                            break;
+                        case CalcType.Times:
+                            calc_res = (calc_res * Convert.ToInt64(resultDispArea.Text));
+                            break;
+                        case CalcType.Divide:
+                            calc_res = (calc_res / Convert.ToInt64(resultDispArea.Text));
+                            break;
+                        default:
+                            resultDispArea.Text = "Fatal";
+                            break;
                     }
                 }
             }
@@ -198,8 +253,17 @@ namespace simple_calculator
                 resultDispArea.Text = "Fatal";
                 return;
             }
-            resultDispArea.Text = result.ToString();
+            resultDispArea.Text = calc_res.ToString();
             isnext = true;
+            calc_type = CalcType.Undefined;
+        }
+
+        private void changeOperation(string operation)
+        {
+            if (calc_type != CalcType.Undefined)
+                formulaDispArea.Text = formulaDispArea.Text.Remove(formulaDispArea.Text.Length - 1);
+
+            appendFormulaDisplayArea(operation);
         }
     }
 }
