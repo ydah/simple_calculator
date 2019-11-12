@@ -37,59 +37,13 @@ namespace simple_calculator
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void NumberButton_Click(object sender, EventArgs e)
         {
-            appendResultDispArea("1");
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("2");
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("3");
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("4");
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("5");
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("6");
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("7");
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("8");
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            appendResultDispArea("9");
-        }
-
-        private void button0_Click(object sender, EventArgs e)
-        {
-            if (resultDispArea.Text.Length == 0)
+            if ((((Button)sender).Text == "0") && (resultDispArea.Text.Length == 0))
                 return;
 
-            appendResultDispArea("0");
+            appendResultDispArea(((Button)sender).Text);
         }
-
         private void sumButton_Click(object sender, EventArgs e)
         {
             calc_type = CalcType.Sum;
