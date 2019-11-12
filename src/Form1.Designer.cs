@@ -381,14 +381,15 @@
             this.Controls.Add(this.CEButton);
             this.Controls.Add(this.backSpaceButton);
             this.Controls.Add(this.resultDisplayButton);
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(321, 393);
             this.MinimumSize = new System.Drawing.Size(321, 393);
             this.Name = "Form1";
-            this.Opacity = 0.9D;
             this.ShowIcon = false;
             this.Text = "simple calculator";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

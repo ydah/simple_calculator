@@ -40,7 +40,6 @@ namespace simple_calculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void NumberButton_Click(object sender, EventArgs e)
@@ -67,67 +66,6 @@ namespace simple_calculator
             }
             CalcResult();
         }
-
-        private void SumButton_Click(object sender, EventArgs e)
-        {
-            calcSignType = CalcType.Sum;
-            AppendFormulaDisplayArea(resultDispArea.Text);
-            AppendFormulaDisplayArea("+");
-            if (isBeforeCalc)
-            {
-                calcResult = Convert.ToDouble(resultDispArea.Text);
-                isAppendingMode = true;
-                isBeforeCalc = false;
-                return;
-            }
-            CalcResult();
-        }
-
-        private void MinButton_Click(object sender, EventArgs e)
-        {
-            calcSignType = CalcType.Minus;
-            AppendFormulaDisplayArea(resultDispArea.Text);
-            AppendFormulaDisplayArea("-");
-            if (isBeforeCalc)
-            {
-                calcResult = Convert.ToDouble(resultDispArea.Text);
-                isAppendingMode = true;
-                isBeforeCalc = false;
-                return;
-            }
-            CalcResult();
-        }
-
-        private void MultiButton_Click(object sender, EventArgs e)
-        {
-            calcSignType = CalcType.Times;
-            AppendFormulaDisplayArea(resultDispArea.Text);
-            AppendFormulaDisplayArea("*");
-            if (isBeforeCalc)
-            {
-                calcResult = Convert.ToDouble(resultDispArea.Text);
-                isAppendingMode = true;
-                isBeforeCalc = false;
-                return;
-            }
-            CalcResult();
-        }
-
-        private void DivButton_Click(object sender, EventArgs e)
-        {
-            calcSignType = CalcType.Divide;
-            AppendFormulaDisplayArea(resultDispArea.Text);
-            AppendFormulaDisplayArea("/");
-            if (isBeforeCalc)
-            {
-                calcResult = Convert.ToDouble(resultDispArea.Text);
-                isAppendingMode = true;
-                isBeforeCalc = false;
-                return;
-            }
-            CalcResult();
-        }
-
         private void SignToggleButton_Click(object sender, EventArgs e)
         {
 
@@ -233,6 +171,22 @@ namespace simple_calculator
         private void SetCalcTypeFromText(string text)
         {
             calcSignType = constCalcTypeTable[text];
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyCode < Keys.D0) || (e.KeyCode > Keys.D9))
+            {
+                return;
+            }
+
+            string downKey = (e.KeyCode - Keys.D0).ToString();
+            if ((downKey == "0") && (resultDispArea.Text.Length == 0))
+            {
+                return;
+            }
+
+            AppendResultDispArea(downKey);
         }
     }
 }
