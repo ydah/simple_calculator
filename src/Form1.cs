@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-enum CalcType
+internal enum CalcType
 {
     Undefined = -1,
     Sum = 0,
@@ -21,11 +21,17 @@ namespace simple_calculator
 {
     public partial class Form1 : Form
     {
-        private Int64 calc_res = 0;
-        private CalcType calc_type = CalcType.Undefined;
-        private bool isnext = false;
-        private bool isfirst = true;
-
+        private double calcResult = 0;
+        private CalcType calcSignType = CalcType.Undefined;
+        private bool isAppendingMode = false;
+        private bool isBeforeCalc = true;
+        private static readonly Dictionary<string, CalcType> constCalcTypeTable = new Dictionary<string, CalcType>
+        {
+            { "＋", CalcType.Sum    },
+            { "－", CalcType.Minus  },
+            { "×", CalcType.Times  },
+            { "÷", CalcType.Divide },
+        };
 
         public Form1()
         {
@@ -40,76 +46,94 @@ namespace simple_calculator
         private void NumberButton_Click(object sender, EventArgs e)
         {
             if ((((Button)sender).Text == "0") && (resultDispArea.Text.Length == 0))
-                return;
-
-            appendResultDispArea(((Button)sender).Text);
-        }
-        private void sumButton_Click(object sender, EventArgs e)
-        {
-            calc_type = CalcType.Sum;
-            appendFormulaDisplayArea(resultDispArea.Text);
-            appendFormulaDisplayArea("+");
-            if (isfirst)
             {
-                calc_res = Convert.ToInt64(resultDispArea.Text);
-                isnext = true;
-                isfirst = false;
                 return;
             }
-            calcResult();
+
+            AppendResultDispArea(((Button)sender).Text);
         }
 
-        private void minButton_Click(object sender, EventArgs e)
+        private void CalcTypeSign_Click(object sender, EventArgs e)
         {
-            calc_type = CalcType.Minus;
-            appendFormulaDisplayArea(resultDispArea.Text);
-            appendFormulaDisplayArea("-");
-            if (isfirst)
+            SetCalcTypeFromText(((Button)sender).Text);
+            AppendFormulaDisplayArea(resultDispArea.Text);
+            AppendFormulaDisplayArea(((Button)sender).Text);
+            if (isBeforeCalc)
             {
-                calc_res = Convert.ToInt64(resultDispArea.Text);
-                isnext = true;
-                isfirst = false;
+                calcResult = Convert.ToDouble(resultDispArea.Text);
+                isAppendingMode = true;
+                isBeforeCalc = false;
                 return;
             }
-            calcResult();
+            CalcResult();
         }
 
-        private void multiButton_Click(object sender, EventArgs e)
+        private void SumButton_Click(object sender, EventArgs e)
         {
-            calc_type = CalcType.Times;
-            appendFormulaDisplayArea(resultDispArea.Text);
-            appendFormulaDisplayArea("*");
-            if (isfirst)
+            calcSignType = CalcType.Sum;
+            AppendFormulaDisplayArea(resultDispArea.Text);
+            AppendFormulaDisplayArea("+");
+            if (isBeforeCalc)
             {
-                calc_res = Convert.ToInt64(resultDispArea.Text);
-                isnext = true;
-                isfirst = false;
+                calcResult = Convert.ToDouble(resultDispArea.Text);
+                isAppendingMode = true;
+                isBeforeCalc = false;
                 return;
             }
-            calcResult();
+            CalcResult();
         }
 
-        private void divButton_Click(object sender, EventArgs e)
+        private void MinButton_Click(object sender, EventArgs e)
         {
-            calc_type = CalcType.Divide;
-            appendFormulaDisplayArea(resultDispArea.Text);
-            appendFormulaDisplayArea("/");
-            if (isfirst)
+            calcSignType = CalcType.Minus;
+            AppendFormulaDisplayArea(resultDispArea.Text);
+            AppendFormulaDisplayArea("-");
+            if (isBeforeCalc)
             {
-                calc_res = Convert.ToInt64(resultDispArea.Text);
-                isnext = true;
-                isfirst = false;
+                calcResult = Convert.ToDouble(resultDispArea.Text);
+                isAppendingMode = true;
+                isBeforeCalc = false;
                 return;
             }
-            calcResult();
+            CalcResult();
         }
 
-        private void signToggleButton_Click(object sender, EventArgs e)
+        private void MultiButton_Click(object sender, EventArgs e)
+        {
+            calcSignType = CalcType.Times;
+            AppendFormulaDisplayArea(resultDispArea.Text);
+            AppendFormulaDisplayArea("*");
+            if (isBeforeCalc)
+            {
+                calcResult = Convert.ToDouble(resultDispArea.Text);
+                isAppendingMode = true;
+                isBeforeCalc = false;
+                return;
+            }
+            CalcResult();
+        }
+
+        private void DivButton_Click(object sender, EventArgs e)
+        {
+            calcSignType = CalcType.Divide;
+            AppendFormulaDisplayArea(resultDispArea.Text);
+            AppendFormulaDisplayArea("/");
+            if (isBeforeCalc)
+            {
+                calcResult = Convert.ToDouble(resultDispArea.Text);
+                isAppendingMode = true;
+                isBeforeCalc = false;
+                return;
+            }
+            CalcResult();
+        }
+
+        private void SignToggleButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void decimalPointButton_Click(object sender, EventArgs e)
+        private void DecimalPointButton_Click(object sender, EventArgs e)
         {
 
         }
@@ -118,8 +142,8 @@ namespace simple_calculator
         {
             resultDispArea.Text = "0";
             formulaDispArea.ResetText();
-            calc_res = 0;
-            isfirst = true;
+            calcResult = 0;
+            isBeforeCalc = true;
         }
 
         private void CButton_Click(object sender, EventArgs e)
@@ -127,7 +151,7 @@ namespace simple_calculator
             resultDispArea.Text = "0";
         }
 
-        private void backSpaceButton_Click(object sender, EventArgs e)
+        private void BackSpaceButton_Click(object sender, EventArgs e)
         {
             if (resultDispArea.Text.Length <= 1)
             {
@@ -138,86 +162,77 @@ namespace simple_calculator
             resultDispArea.Text = resultDispArea.Text.Remove(resultDispArea.Text.Length - 1);
         }
 
-        private void resultDisplayButton_Click(object sender, EventArgs e)
+        private void ResultDisplayButton_Click(object sender, EventArgs e)
         {
             if (formulaDispArea.Text.Length == 0)
                 return;
 
-            appendFormulaDisplayArea(resultDispArea.Text);
-            calcResult();
+            AppendFormulaDisplayArea(resultDispArea.Text);
+            CalcResult();
             formulaDispArea.ResetText();
-            calc_res = 0;
-            isfirst = true;
+            calcResult = 0;
+            isBeforeCalc = true;
         }
 
-        private void appendResultDispArea(string str)
+        private void AppendResultDispArea(string word)
         {
-            if (isnext)
+            if (isAppendingMode)
             {
-                resultDispArea.Text = str;
-                isnext = false;
+                resultDispArea.Text = word;
+                isAppendingMode = false;
                 return;
             }
 
             if ((resultDispArea.Text.Length == 1) && (resultDispArea.Text == "0"))
             {
-                resultDispArea.Text = str;
+                resultDispArea.Text = word;
             }
             else
             {
-                resultDispArea.AppendText(str);
+                resultDispArea.AppendText(word);
             }
         }
 
-        private void appendFormulaDisplayArea(string chars)
+        private void AppendFormulaDisplayArea(string chars)
         {
             formulaDispArea.AppendText(chars);
         }
 
-        private void calcResult()
+        private void CalcResult()
         {
-            try {
-                checked {
-                    switch (calc_type) {
-                        case CalcType.Sum:
-                            calc_res += Convert.ToInt64(resultDispArea.Text);
-                            break;
-                        case CalcType.Minus:
-                            calc_res -= Convert.ToInt64(resultDispArea.Text);
-                            break;
-                        case CalcType.Times:
-                            calc_res = (calc_res * Convert.ToInt64(resultDispArea.Text));
-                            break;
-                        case CalcType.Divide:
-                            calc_res = (calc_res / Convert.ToInt64(resultDispArea.Text));
-                            break;
-                        default:
-                            resultDispArea.Text = "Fatal";
-                            break;
-                    }
-                }
+            switch (calcSignType) {
+                case CalcType.Sum:
+                    calcResult += Convert.ToDouble(resultDispArea.Text);
+                    break;
+                case CalcType.Minus:
+                    calcResult -= Convert.ToDouble(resultDispArea.Text);
+                    break;
+                case CalcType.Times:
+                    calcResult *= Convert.ToDouble(resultDispArea.Text);
+                    break;
+                case CalcType.Divide:
+                    calcResult /= Convert.ToDouble(resultDispArea.Text);
+                    break;
+                default:
+                    resultDispArea.Text = "Fatal";
+                    break;
             }
-            catch (OverflowException ex)
-            {
-                resultDispArea.Text = "Over flow";
-                return;
-            }
-            catch (FormatException ex)
-            {
-                resultDispArea.Text = "Fatal";
-                return;
-            }
-            resultDispArea.Text = calc_res.ToString();
-            isnext = true;
-            calc_type = CalcType.Undefined;
+            resultDispArea.Text = calcResult.ToString();
+            isAppendingMode = true;
+            calcSignType = CalcType.Undefined;
         }
 
-        private void changeOperation(string operation)
+        private void ChangeOperation(string operation)
         {
-            if (calc_type != CalcType.Undefined)
+            if (calcSignType != CalcType.Undefined)
                 formulaDispArea.Text = formulaDispArea.Text.Remove(formulaDispArea.Text.Length - 1);
 
-            appendFormulaDisplayArea(operation);
+            AppendFormulaDisplayArea(operation);
+        }
+
+        private void SetCalcTypeFromText(string text)
+        {
+            calcSignType = constCalcTypeTable[text];
         }
     }
 }

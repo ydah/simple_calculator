@@ -105,7 +105,7 @@
             this.backSpaceButton.TabIndex = 5;
             this.backSpaceButton.Text = "→";
             this.backSpaceButton.UseVisualStyleBackColor = true;
-            this.backSpaceButton.Click += new System.EventHandler(this.backSpaceButton_Click);
+            this.backSpaceButton.Click += new System.EventHandler(this.BackSpaceButton_Click);
             // 
             // divButton
             // 
@@ -118,7 +118,7 @@
             this.divButton.TabIndex = 6;
             this.divButton.Text = "÷";
             this.divButton.UseVisualStyleBackColor = true;
-            this.divButton.Click += new System.EventHandler(this.divButton_Click);
+            this.divButton.Click += new System.EventHandler(this.CalcTypeSign_Click);
             // 
             // multiButton
             // 
@@ -131,7 +131,7 @@
             this.multiButton.TabIndex = 7;
             this.multiButton.Text = "×";
             this.multiButton.UseVisualStyleBackColor = true;
-            this.multiButton.Click += new System.EventHandler(this.multiButton_Click);
+            this.multiButton.Click += new System.EventHandler(this.CalcTypeSign_Click);
             // 
             // minButton
             // 
@@ -142,9 +142,9 @@
             this.minButton.Name = "minButton";
             this.minButton.Size = new System.Drawing.Size(66, 43);
             this.minButton.TabIndex = 8;
-            this.minButton.Text = "ー";
+            this.minButton.Text = "－";
             this.minButton.UseVisualStyleBackColor = true;
-            this.minButton.Click += new System.EventHandler(this.minButton_Click);
+            this.minButton.Click += new System.EventHandler(this.CalcTypeSign_Click);
             // 
             // button7
             // 
@@ -283,7 +283,7 @@
             this.sumButton.TabIndex = 18;
             this.sumButton.Text = "＋";
             this.sumButton.UseVisualStyleBackColor = true;
-            this.sumButton.Click += new System.EventHandler(this.sumButton_Click);
+            this.sumButton.Click += new System.EventHandler(this.CalcTypeSign_Click);
             // 
             // signToggleButton
             // 
@@ -296,7 +296,7 @@
             this.signToggleButton.TabIndex = 19;
             this.signToggleButton.Text = "+/-";
             this.signToggleButton.UseVisualStyleBackColor = true;
-            this.signToggleButton.Click += new System.EventHandler(this.signToggleButton_Click);
+            this.signToggleButton.Click += new System.EventHandler(this.SignToggleButton_Click);
             // 
             // button0
             // 
@@ -323,7 +323,7 @@
             this.decimalPointButton.TabIndex = 21;
             this.decimalPointButton.Text = "．";
             this.decimalPointButton.UseVisualStyleBackColor = true;
-            this.decimalPointButton.Click += new System.EventHandler(this.decimalPointButton_Click);
+            this.decimalPointButton.Click += new System.EventHandler(this.DecimalPointButton_Click);
             // 
             // resultDisplayButton
             // 
@@ -336,7 +336,7 @@
             this.resultDisplayButton.TabIndex = 22;
             this.resultDisplayButton.Text = "＝";
             this.resultDisplayButton.UseVisualStyleBackColor = true;
-            this.resultDisplayButton.Click += new System.EventHandler(this.resultDisplayButton_Click);
+            this.resultDisplayButton.Click += new System.EventHandler(this.ResultDisplayButton_Click);
             // 
             // formulaDispArea
             // 
