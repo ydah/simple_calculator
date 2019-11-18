@@ -68,6 +68,9 @@ namespace simple_calculator
         }
         private void SignToggleButton_Click(object sender, EventArgs e)
         {
+            double currentValue = Convert.ToDouble(resultDispArea.Text);
+            currentValue *= -1;
+            resultDispArea.Text = currentValue.ToString();
 
         }
 
