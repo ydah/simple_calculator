@@ -124,6 +124,11 @@ namespace simple_calculator
                 return;
             }
 
+            if (resultDispArea.Text.Length > resultDispArea.MaxLength)
+            {
+                return;
+            }
+
             if ((resultDispArea.Text.Length == 1) && (resultDispArea.Text == "0"))
             {
                 resultDispArea.Text = word;
@@ -157,6 +162,15 @@ namespace simple_calculator
                 default:
                     resultDispArea.Text = "Fatal";
                     break;
+            }
+
+            if (calcResult.ToString().Length > resultDispArea.MaxLength)
+            {
+                resultDispArea.Text = calcResult.ToString().Remove(calcResult.ToString().Length - (calcResult.ToString().Length - resultDispArea.MaxLength));
+                formulaDispArea.Text = "Over Flow";
+                calcResult = 0;
+                isBeforeCalc = true;
+                return;
             }
             resultDispArea.Text = calcResult.ToString();
             isAppendingMode = true;

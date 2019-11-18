@@ -61,6 +61,7 @@
             this.resultDispArea.Font = new System.Drawing.Font("Yu Gothic UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.resultDispArea.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.resultDispArea.Location = new System.Drawing.Point(12, 40);
+            this.resultDispArea.MaxLength = 9;
             this.resultDispArea.Name = "resultDispArea";
             this.resultDispArea.ReadOnly = true;
             this.resultDispArea.Size = new System.Drawing.Size(282, 54);
