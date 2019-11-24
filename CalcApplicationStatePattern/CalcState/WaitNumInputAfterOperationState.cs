@@ -36,6 +36,7 @@ namespace CalcState
             form.UpdateResultArea(num);
             return new CalculableState(form);
         }
+
         /// <summary>
         /// 計算符号が入力された。
         /// </summary>
