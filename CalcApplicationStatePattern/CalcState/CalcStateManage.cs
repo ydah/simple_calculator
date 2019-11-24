@@ -24,7 +24,7 @@ namespace CalcState
         /// <summary>
         /// 状態
         /// </summary>
-        private StateInterFace state = null;
+        private StateIF state = null;
         #endregion  // フィールド
 
         #region 公開メソッド

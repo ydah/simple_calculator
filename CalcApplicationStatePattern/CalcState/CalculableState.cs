@@ -2,20 +2,20 @@ using CalcApplication;
 
 namespace CalcState
 {
-    public class DoCalcState : StateInterFace
+    public class CalculableState : StateIF
     {
         MainForm form = null;
-        internal DoCalcState(MainForm mainForm)
+        internal CalculableState(MainForm mainForm)
         {
             form = mainForm;
         }
 
-        public StateInterFace InputNumberEvent(string num)
+        public StateIF InputNumberEvent(string num)
         {
             form.AppendResultArea(num);
             return this;
         }
-        public StateInterFace InputCalcOperationEvent(string operation)
+        public StateIF InputCalcOperationEvent(string operation)
         {
             form.AppendFormulaDisplayAreaFromResultArea();
             form.Calculate();
@@ -23,23 +23,23 @@ namespace CalcState
             form.SetCalcOperationFromText(operation);
             return new WaitNumInputAfterOperationState(form);
         }
-        public StateInterFace InputCalculateEvent()
+        public StateIF InputCalculateEvent()
         {
             form.ClearFormulaArea();
             form.Calculate();
             return new InitialState(form);
         }
-        public StateInterFace InputCButtonEvent()
+        public StateIF InputCButtonEvent()
         {
             form.ResetAll();
             return new InitialState(form);
         }
-        public StateInterFace InputCEButtonEvent()
+        public StateIF InputCEButtonEvent()
         {
             form.ClearResultArea();
             return new WaitNumInputAfterOperationState(form);
         }
-        public StateInterFace InputBackSpaceEvent()
+        public StateIF InputBackSpaceEvent()
         {
             if (form.getLengthResultArea() <= 1) {
                 form.ClearResultArea();
@@ -48,12 +48,12 @@ namespace CalcState
             form.DeleteLastChar();
             return this;
         }
-        public StateInterFace InputSignToggleEvent()
+        public StateIF InputSignToggleEvent()
         {
             form.TogglePositiveAndNegative();
             return this;
         }
-        public StateInterFace InputDecimalPointEvent()
+        public StateIF InputDecimalPointEvent()
         {
             if (!form.IsContainDecimalPoint()) {
                 form.AppendResultArea(".");

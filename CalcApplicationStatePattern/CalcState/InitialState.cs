@@ -6,7 +6,7 @@ namespace CalcState
     /// <summary>
     /// 初期状態クラス
     /// </summary>
-    public class InitialState : StateInterFace
+    public class InitialState : StateIF
     {
         #region コンストラクタ
         /// <summary>
@@ -31,7 +31,7 @@ namespace CalcState
         /// 数字が入力された。
         /// </summary>
         /// <param name="num">入力された数字</param>
-        public StateInterFace InputNumberEvent(string num)
+        public StateIF InputNumberEvent(string num)
         {
             form.ResetAll();
             form.UpdateResultArea(num);
@@ -42,7 +42,7 @@ namespace CalcState
         /// 計算符号が入力された。
         /// </summary>
         /// <param name="operation">入力された計算符号</param>
-        public StateInterFace InputCalcOperationEvent(string operation)
+        public StateIF InputCalcOperationEvent(string operation)
         {
             form.ResetAll();
             form.AppendFormulaDisplayArea(Defines.ConstDefines.InitCalcResultDisp+ operation);
@@ -52,7 +52,7 @@ namespace CalcState
         /// <summary>
         /// ＝ボタンが入力された
         /// </summary>
-        public StateInterFace InputCalculateEvent()
+        public StateIF InputCalculateEvent()
         {
             form.ResetAll();
             return this;
@@ -61,7 +61,7 @@ namespace CalcState
         /// <summary>
         /// Cボタンが入力された
         /// </summary>
-        public StateInterFace InputCButtonEvent()
+        public StateIF InputCButtonEvent()
         {
             form.ResetAll();
             return this;
@@ -70,7 +70,7 @@ namespace CalcState
         /// <summary>
         /// CEボタンが入力された
         /// </summary>
-        public StateInterFace InputCEButtonEvent()
+        public StateIF InputCEButtonEvent()
         {
             form.ResetAll();
             return this;
@@ -79,7 +79,7 @@ namespace CalcState
         /// <summary>
         /// ←ボタンが入力された
         /// </summary>
-        public StateInterFace InputBackSpaceEvent()
+        public StateIF InputBackSpaceEvent()
         {
             return this;
         }
@@ -87,7 +87,7 @@ namespace CalcState
         /// <summary>
         /// 正負切り替えボタンが入力された
         /// </summary>
-        public StateInterFace InputSignToggleEvent()
+        public StateIF InputSignToggleEvent()
         {
             if (form.IsInitialValueResultArea()) {
                 return this;
@@ -100,7 +100,7 @@ namespace CalcState
         /// <summary>
         /// 小数点"."ボタンが入力された
         /// </summary>
-        public StateInterFace InputDecimalPointEvent()
+        public StateIF InputDecimalPointEvent()
         {
             form.ClearResultArea();
             form.AppendResultArea(".");
