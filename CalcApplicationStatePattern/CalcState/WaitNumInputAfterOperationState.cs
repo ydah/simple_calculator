@@ -1,14 +1,17 @@
 using CalcApplication;
+using Defines;
 
 namespace CalcState
 {
     #region 符号入力後、数値入力待ち状態クラス
+
     /// <summary>
     /// 符号入力後、数値入力待ち状態クラス
     /// </summary>
     public class WaitNumInputAfterOperationState : StateIF
     {
         #region コンストラクタ
+
         /// <summary>
         /// <see cref="CalcStateManage"/>クラスの新しいインスタンスを初期化する。
         /// </summary>
@@ -17,22 +20,31 @@ namespace CalcState
         {
             form = mainForm;
         }
-        #endregion  // コンストラクタ
+
+        #endregion コンストラクタ
 
         #region フィールド
+
         /// <summary>
         /// メインフォームクラスインスタンス
         /// </summary>
-        MainForm form = null;
-        #endregion  // フィールド
+        private MainForm form = null;
+
+        #endregion フィールド
 
         #region 公開メソッド
+
         /// <summary>
         /// 数字が入力された。
         /// </summary>
         /// <param name="num">入力された数字</param>
         public StateIF InputNumberEvent(string num)
         {
+            form.ClearResultArea();
+            if (form.IsInitialValueResultArea() && (num == ConstDefines.InitCalcResultDisp))
+            {
+                return this;
+            }
             form.UpdateResultArea(num);
             return new CalculableState(form);
         }
@@ -96,10 +108,12 @@ namespace CalcState
         public StateIF InputDecimalPointEvent()
         {
             form.ClearResultArea();
-            form.AppendResultArea(".");
+            form.AppendResultArea(ConstDefines.DecimalPoint);
             return new CalculableState(form);
         }
-        #endregion  // 公開メソッド
+
+        #endregion 公開メソッド
     }
-    #endregion  // 符号入力後、数値入力待ち状態クラス
+
+    #endregion 符号入力後、数値入力待ち状態クラス
 }

@@ -3,9 +3,11 @@ using CalcApplication;
 namespace CalcState
 {
     #region 計算機状態管理クラス
+
     internal class CalcStateManage
     {
         #region コンストラクタ
+
         /// <summary>
         /// <see cref="CalcStateManage"/>クラスの新しいインスタンスを初期化する。
         /// </summary>
@@ -18,16 +20,20 @@ namespace CalcState
                 state = new InitialState(form);
             }
         }
-        #endregion  // コンストラクタ
+
+        #endregion コンストラクタ
 
         #region フィールド
+
         /// <summary>
         /// 状態
         /// </summary>
         private StateIF state = null;
-        #endregion  // フィールド
+
+        #endregion フィールド
 
         #region 公開メソッド
+
         /// <summary>
         /// 数字が入力された。
         /// </summary>
@@ -92,7 +98,9 @@ namespace CalcState
         {
             this.state = this.state.InputDecimalPointEvent();
         }
-        #endregion  // 公開メソッド
+
+        #endregion 公開メソッド
     }
-    #endregion  // 計算機状態管理クラス
+
+    #endregion 計算機状態管理クラス
 }

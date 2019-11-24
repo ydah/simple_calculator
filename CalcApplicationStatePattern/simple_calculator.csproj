@@ -62,9 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalcState\CalcStateManage.cs" />
-    <Compile Include="CalcState\DoCalcState.cs" />
+    <Compile Include="CalcState\CalculableState.cs" />
     <Compile Include="CalcState\InitialState.cs" />
-    <Compile Include="CalcState\StateInterFace.cs" />
+    <Compile Include="CalcState\StateIF.cs" />
     <Compile Include="CalcState\WaitOperationInputState.cs" />
     <Compile Include="CalcState\WaitNumInputAfterOperationState.cs" />
     <Compile Include="ConstDefines.cs" />

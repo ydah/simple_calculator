@@ -3,9 +3,11 @@ using System.Collections.Generic;
 namespace Defines
 {
     #region 定数定義クラス
-    static class ConstDefines
+
+    internal static class ConstDefines
     {
         #region フィールド（読み取り専用）
+
         /// <summary>
         /// 計算種別。
         /// </summary>
@@ -17,6 +19,7 @@ namespace Defines
             Multiple,
             Divide
         };
+
         /// <summary>
         /// 符号文字から計算種別を取得する変換テーブル。
         /// </summary>
@@ -53,7 +56,14 @@ namespace Defines
         /// 符号文字：割り算
         /// </summary>
         public const string Divide = "÷";
-        #endregion  // フィールド（読み取り専用）
+
+        /// <summary>
+        /// 小数点
+        /// </summary>
+        public const string DecimalPoint = ".";
+
+        #endregion フィールド（読み取り専用）
     }
-    #endregion  // 定数定義クラス
+
+    #endregion 定数定義クラス
 }

@@ -1,14 +1,17 @@
 using CalcApplication;
+using Defines;
 
 namespace CalcState
 {
     #region 計算可能状態クラス
+
     /// <summary>
     /// 計算可能状態クラス
     /// </summary>
     public class CalculableState : StateIF
     {
         #region コンストラクタ
+
         /// <summary>
         /// <see cref="CalcStateManage"/>クラスの新しいインスタンスを初期化する。
         /// </summary>
@@ -17,16 +20,20 @@ namespace CalcState
         {
             form = mainForm;
         }
-        #endregion  // コンストラクタ
+
+        #endregion コンストラクタ
 
         #region フィールド
+
         /// <summary>
         /// メインフォームクラスインスタンス
         /// </summary>
-        MainForm form = null;
-        #endregion  // フィールド
+        private MainForm form = null;
+
+        #endregion フィールド
 
         #region 公開メソッド
+
         /// <summary>
         /// 数字が入力された。
         /// </summary>
@@ -44,7 +51,10 @@ namespace CalcState
         public StateIF InputCalcOperationEvent(string operation)
         {
             form.AppendFormulaDisplayAreaFromResultArea();
-            form.Calculate();
+            if (!form.Calculate())
+            {
+                return new InitialState(form);
+            }
             form.AppendFormulaDisplayArea(operation);
             form.SetCalcOperationFromText(operation);
             return new WaitNumInputAfterOperationState(form);
@@ -56,7 +66,10 @@ namespace CalcState
         public StateIF InputCalculateEvent()
         {
             form.ClearFormulaArea();
-            form.Calculate();
+            if (!form.Calculate())
+            {
+                return new InitialState(form);
+            }
             return new InitialState(form);
         }
 
@@ -83,7 +96,8 @@ namespace CalcState
         /// </summary>
         public StateIF InputBackSpaceEvent()
         {
-            if (form.getLengthResultArea() <= 1) {
+            if ((form.getLengthResultArea() - 1) <= 1)
+            {
                 form.ClearResultArea();
                 return new WaitNumInputAfterOperationState(form);
             }
@@ -105,12 +119,15 @@ namespace CalcState
         /// </summary>
         public StateIF InputDecimalPointEvent()
         {
-            if (!form.IsContainDecimalPoint()) {
-                form.AppendResultArea(".");
+            if (!form.IsContainDecimalPoint())
+            {
+                form.AppendResultArea(ConstDefines.DecimalPoint);
             }
             return this;
         }
-        #endregion  // 公開メソッド
+
+        #endregion 公開メソッド
     }
-    #endregion  // 計算可能状態クラス
+
+    #endregion 計算可能状態クラス
 }

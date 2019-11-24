@@ -1,16 +1,19 @@
-﻿using System;
+﻿using CalcState;
+using Defines;
+using System;
 using System.Windows.Forms;
-using CalcState;
 
 namespace CalcApplication
 {
     #region メイン画面クラス
+
     /// <summary>
     /// メイン画面クラス
     /// </summary>
     internal partial class MainForm : Form
     {
         #region コンストラクタ
+
         /// <summary>
         /// <see cref="MainForm"/>クラスの新しいインスタンスを初期化する。
         /// </summary>
@@ -18,24 +21,30 @@ namespace CalcApplication
         {
             InitializeComponent();
         }
-        #endregion  // コンストラクタ
+
+        #endregion コンストラクタ
 
         #region フィールド
+
         /// <summary>
         /// 計算結果
         /// </summary>
         private static double calcResult = 0;
+
         /// <summary>
         /// 符号種別
         /// </summary>
-        private static Defines.ConstDefines.CalcType calcOperationType = Defines.ConstDefines.CalcType.Undefined;
+        private static ConstDefines.CalcType calcOperationType = ConstDefines.CalcType.Undefined;
+
         /// <summary>
         /// 状態管理クラス
         /// </summary>
         private static CalcStateManage context = null;
-        #endregion  // フィールド
+
+        #endregion フィールド
 
         #region 公開メソッド
+
         /// <summary>
         /// 計算結果エリアに数字を格納する。
         /// </summary>
@@ -59,7 +68,7 @@ namespace CalcApplication
         /// </summary>
         internal void ClearResultArea()
         {
-            resultDispArea.Text = Defines.ConstDefines.InitCalcResultDisp;
+            resultDispArea.Text = ConstDefines.InitCalcResultDisp;
         }
 
         /// <summary>
@@ -77,7 +86,7 @@ namespace CalcApplication
         /// <returns>初期状態か否か。true:初期状態 false:初期状態でない</returns>
         internal bool IsInitialValueResultArea()
         {
-            return ((resultDispArea.Text.Length == 1) && (resultDispArea.Text == Defines.ConstDefines.InitCalcResultDisp));
+            return ((resultDispArea.Text.Length == 1) && (resultDispArea.Text == ConstDefines.InitCalcResultDisp));
         }
 
         /// <summary>
@@ -94,7 +103,7 @@ namespace CalcApplication
         /// </summary>
         internal void AppendFormulaDisplayAreaFromResultArea()
         {
-            if (resultDispArea.Text.EndsWith("."))
+            if (resultDispArea.Text.EndsWith(ConstDefines.DecimalPoint))
             {
                 DeleteLastChar();
             }
@@ -131,34 +140,41 @@ namespace CalcApplication
         /// <summary>
         /// 計算を実施する
         /// </summary>
-        internal void Calculate()
+        internal bool Calculate()
         {
             // 符号種別に応じた演算を行う
             switch (calcOperationType)
             {
                 // 足し算の場合
-                case Defines.ConstDefines.CalcType.Sum:
+                case ConstDefines.CalcType.Sum:
                     calcResult += Convert.ToDouble(resultDispArea.Text);
                     break;
                 // 引き算の場合
-                case Defines.ConstDefines.CalcType.Minus:
+                case ConstDefines.CalcType.Minus:
                     calcResult -= Convert.ToDouble(resultDispArea.Text);
                     break;
                 // 掛け算の場合
-                case Defines.ConstDefines.CalcType.Multiple:
+                case ConstDefines.CalcType.Multiple:
                     calcResult *= Convert.ToDouble(resultDispArea.Text);
                     break;
                 // 割り算の場合
-                case Defines.ConstDefines.CalcType.Divide:
+                case ConstDefines.CalcType.Divide:
+                    if (Convert.ToDouble(resultDispArea.Text) == 0.0)
+                    {
+                        resultDispArea.Text = "Zero Divide";
+                        return false;
+                    }
                     calcResult /= Convert.ToDouble(resultDispArea.Text);
                     break;
                 // ここに来るのはあり得ない
                 default:
                     break;
             }
+
             // 計算結果を計算結果表示エリアに表示する
             resultDispArea.Text = calcResult.ToString();
-            calcOperationType = Defines.ConstDefines.CalcType.Undefined;
+            calcOperationType = ConstDefines.CalcType.Undefined;
+            return true;
         }
 
         /// <summary>
@@ -167,7 +183,7 @@ namespace CalcApplication
         /// <param name="operation">変更後の符号</param>
         internal void ChangeOperation(string operation)
         {
-            if (calcOperationType != Defines.ConstDefines.CalcType.Undefined)
+            if (calcOperationType != ConstDefines.CalcType.Undefined)
             {
                 formulaDispArea.Text = formulaDispArea.Text.Remove(formulaDispArea.Text.Length - 1);
             }
@@ -182,7 +198,7 @@ namespace CalcApplication
         /// <param name="operation">変更後の符号</param>
         internal void SetCalcOperationFromText(string operation)
         {
-            calcOperationType = Defines.ConstDefines.OperationTypeTable[operation];
+            calcOperationType = ConstDefines.OperationTypeTable[operation];
         }
 
         /// <summary>
@@ -211,11 +227,13 @@ namespace CalcApplication
         /// <returns>小数点が含まれているか否か？ true:含まれている false:含まれていない</returns>
         internal bool IsContainDecimalPoint()
         {
-            return resultDispArea.Text.Contains(".");
+            return resultDispArea.Text.Contains(ConstDefines.DecimalPoint);
         }
-        #endregion  // 公開メソッド
+
+        #endregion 公開メソッド
 
         #region プライベートメソッド（イベントハンドラ）
+
         /// <summary>
         /// フォームを読み込む
         /// </summary>
@@ -307,7 +325,9 @@ namespace CalcApplication
         {
             context.InputDecimalPoint();
         }
-        #endregion  // プライベートメソッド（イベントハンドラ）
+
+        #endregion プライベートメソッド（イベントハンドラ）
     }
-    #endregion  // メイン画面クラス
+
+    #endregion メイン画面クラス
 }

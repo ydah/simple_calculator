@@ -1,14 +1,17 @@
 using CalcApplication;
+using Defines;
 
 namespace CalcState
 {
     #region 初期状態クラス
+
     /// <summary>
     /// 初期状態クラス
     /// </summary>
     public class InitialState : StateIF
     {
         #region コンストラクタ
+
         /// <summary>
         /// <see cref="CalcStateManage"/>クラスの新しいインスタンスを初期化する。
         /// </summary>
@@ -17,16 +20,20 @@ namespace CalcState
         {
             form = mainForm;
         }
-        #endregion  // コンストラクタ
+
+        #endregion コンストラクタ
 
         #region フィールド
+
         /// <summary>
         /// メインフォームクラスインスタンス
         /// </summary>
-        MainForm form = null;
-        #endregion  // フィールド
+        private MainForm form = null;
+
+        #endregion フィールド
 
         #region 公開メソッド
+
         /// <summary>
         /// 数字が入力された。
         /// </summary>
@@ -34,6 +41,10 @@ namespace CalcState
         public StateIF InputNumberEvent(string num)
         {
             form.ResetAll();
+            if (num == ConstDefines.InitCalcResultDisp)
+            {
+                return this;
+            }
             form.UpdateResultArea(num);
             return new WaitOperationInputState(form);
         }
@@ -45,7 +56,8 @@ namespace CalcState
         public StateIF InputCalcOperationEvent(string operation)
         {
             form.ResetAll();
-            form.AppendFormulaDisplayArea(Defines.ConstDefines.InitCalcResultDisp+ operation);
+            form.AppendFormulaDisplayArea(Defines.ConstDefines.InitCalcResultDisp + operation);
+            form.SetCalcOperationFromText(operation);
             return new WaitNumInputAfterOperationState(form);
         }
 
@@ -89,7 +101,8 @@ namespace CalcState
         /// </summary>
         public StateIF InputSignToggleEvent()
         {
-            if (form.IsInitialValueResultArea()) {
+            if (form.IsInitialValueResultArea())
+            {
                 return this;
             }
 
@@ -103,10 +116,12 @@ namespace CalcState
         public StateIF InputDecimalPointEvent()
         {
             form.ClearResultArea();
-            form.AppendResultArea(".");
+            form.AppendResultArea(ConstDefines.DecimalPoint);
             return new WaitOperationInputState(form);
         }
-        #endregion  // 公開メソッド
+
+        #endregion 公開メソッド
     }
-    #endregion  // 初期状態クラス
+
+    #endregion 初期状態クラス
 }

@@ -1,14 +1,17 @@
 using CalcApplication;
+using Defines;
 
 namespace CalcState
 {
     #region 符号入力待ち状態クラス
+
     /// <summary>
     /// 符号入力待ち状態クラス
     /// </summary>
-    public class WaitOperationInputState : StateInterFace
+    public class WaitOperationInputState : StateIF
     {
         #region コンストラクタ
+
         /// <summary>
         /// <see cref="CalcStateManage"/>クラスの新しいインスタンスを初期化する。
         /// </summary>
@@ -17,21 +20,25 @@ namespace CalcState
         {
             form = mainForm;
         }
-        #endregion  // コンストラクタ
+
+        #endregion コンストラクタ
 
         #region フィールド
+
         /// <summary>
         /// メインフォームクラスインスタンス
         /// </summary>
-        MainForm form = null;
-        #endregion  // フィールド
+        private MainForm form = null;
+
+        #endregion フィールド
 
         #region 公開メソッド
+
         /// <summary>
         /// 数字が入力された。
         /// </summary>
         /// <param name="num">入力された数字</param>
-        public StateInterFace InputNumberEvent(string num)
+        public StateIF InputNumberEvent(string num)
         {
             form.AppendResultArea(num);
             return this;
@@ -41,7 +48,7 @@ namespace CalcState
         /// 計算符号が入力された。
         /// </summary>
         /// <param name="operation">入力された計算符号</param>
-        public StateInterFace InputCalcOperationEvent(string operation)
+        public StateIF InputCalcOperationEvent(string operation)
         {
             form.AppendFormulaDisplayAreaFromResultArea();
             form.AppendFormulaDisplayArea(operation);
@@ -53,7 +60,7 @@ namespace CalcState
         /// <summary>
         /// ＝ボタンが入力された
         /// </summary>
-        public StateInterFace InputCalculateEvent()
+        public StateIF InputCalculateEvent()
         {
             return new InitialState(form);
         }
@@ -61,7 +68,7 @@ namespace CalcState
         /// <summary>
         /// Cボタンが入力された
         /// </summary>
-        public StateInterFace InputCButtonEvent()
+        public StateIF InputCButtonEvent()
         {
             form.ResetAll();
             return new InitialState(form);
@@ -70,7 +77,7 @@ namespace CalcState
         /// <summary>
         /// CEボタンが入力された
         /// </summary>
-        public StateInterFace InputCEButtonEvent()
+        public StateIF InputCEButtonEvent()
         {
             form.ResetAll();
             return new InitialState(form);
@@ -79,9 +86,10 @@ namespace CalcState
         /// <summary>
         /// ←ボタンが入力された
         /// </summary>
-        public StateInterFace InputBackSpaceEvent()
+        public StateIF InputBackSpaceEvent()
         {
-            if (form.getLengthResultArea() <= 1) {
+            if ((form.getLengthResultArea() - 1) <= 1)
+            {
                 form.ResetAll();
                 return new InitialState(form);
             }
@@ -92,7 +100,7 @@ namespace CalcState
         /// <summary>
         /// 正負切り替えボタンが入力された
         /// </summary>
-        public StateInterFace InputSignToggleEvent()
+        public StateIF InputSignToggleEvent()
         {
             form.TogglePositiveAndNegative();
             return this;
@@ -101,14 +109,17 @@ namespace CalcState
         /// <summary>
         /// 小数点"."ボタンが入力された
         /// </summary>
-        public StateInterFace InputDecimalPointEvent()
+        public StateIF InputDecimalPointEvent()
         {
-            if (!form.IsContainDecimalPoint()) {
-                form.AppendResultArea(".");
+            if (!form.IsContainDecimalPoint())
+            {
+                form.AppendResultArea(ConstDefines.DecimalPoint);
             }
             return this;
         }
-        #endregion  // 公開メソッド
+
+        #endregion 公開メソッド
     }
-    #endregion  // 符号入力待ち状態クラス
+
+    #endregion 符号入力待ち状態クラス
 }
