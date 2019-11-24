@@ -38,7 +38,7 @@ namespace simple_calculator
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainFrom_Load(object sender, EventArgs e)
         {
         }
 
@@ -190,7 +190,7 @@ namespace simple_calculator
             calcSignType = constCalcTypeTable[text];
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if ((e.KeyCode < Keys.D0) || (e.KeyCode > Keys.D9))
             {
