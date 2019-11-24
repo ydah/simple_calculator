@@ -1,6 +1,6 @@
 ﻿namespace simple_calculator
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -354,7 +354,7 @@
             this.formulaDispArea.TabIndex = 23;
             this.formulaDispArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -386,7 +386,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(321, 393);
             this.MinimumSize = new System.Drawing.Size(321, 393);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "simple calculator";
             this.Load += new System.EventHandler(this.Form1_Load);

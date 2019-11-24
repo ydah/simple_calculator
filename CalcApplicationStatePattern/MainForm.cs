@@ -19,7 +19,7 @@ internal enum CalcType
 
 namespace simple_calculator
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private double calcResult = 0;
         private CalcType calcSignType = CalcType.Undefined;
@@ -33,7 +33,7 @@ namespace simple_calculator
             { "÷", CalcType.Divide },
         };
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
