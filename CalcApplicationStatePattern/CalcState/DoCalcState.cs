@@ -21,7 +21,7 @@ namespace CalcState
             form.Calculate();
             form.AppendFormulaDisplayArea(operation);
             form.SetCalcOperationFromText(operation);
-            return new WaitRightNumInputState(form);
+            return new WaitNumInputAfterOperationState(form);
         }
         public StateInterFace InputCalculateEvent()
         {
@@ -37,13 +37,13 @@ namespace CalcState
         public StateInterFace InputCEButtonEvent()
         {
             form.ClearResultArea();
-            return new WaitRightNumInputState(form);
+            return new WaitNumInputAfterOperationState(form);
         }
         public StateInterFace InputBackSpaceEvent()
         {
             if (form.getLengthResultArea() <= 1) {
                 form.ClearResultArea();
-                return new WaitRightNumInputState(form);
+                return new WaitNumInputAfterOperationState(form);
             }
             form.DeleteLastChar();
             return this;

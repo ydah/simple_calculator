@@ -2,10 +2,10 @@ using CalcApplication;
 
 namespace CalcState
 {
-    public class WaitRightNumInputState : StateInterFace
+    public class WaitNumInputAfterOperationState : StateInterFace
     {
         MainForm form = null;
-        internal WaitRightNumInputState(MainForm mainForm)
+        internal WaitNumInputAfterOperationState(MainForm mainForm)
         {
             form = mainForm;
         }

@@ -21,7 +21,7 @@ namespace CalcState
             form.AppendFormulaDisplayArea(operation);
             form.SetCalcOperationFromText(operation);
             form.UpdateCalcResult();
-            return new WaitRightNumInputState(form);
+            return new WaitNumInputAfterOperationState(form);
         }
         public StateInterFace InputCalculateEvent()
         {

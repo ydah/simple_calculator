@@ -23,7 +23,7 @@ namespace CalcState
         {
             form.ResetAll();
 			form.AppendFormulaDisplayArea(Defines.ConstDefines.InitCalcResultDisp+ operation);
-            return new WaitRightNumInputState(form);
+            return new WaitNumInputAfterOperationState(form);
         }
         public StateInterFace InputCalculateEvent()
         {
