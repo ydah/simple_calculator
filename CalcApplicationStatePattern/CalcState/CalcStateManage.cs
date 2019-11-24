@@ -9,7 +9,7 @@ namespace CalcState
         /// <summary>
         /// <see cref="CalcStateManage"/>クラスの新しいインスタンスを初期化する。
         /// </summary>
-        /// <param name="form"></param>
+        /// <param name="form">メイン画面のフォーム</param>
         internal CalcStateManage(MainForm form)
         {
             // 状態の初期値を設定しておく
@@ -28,7 +28,6 @@ namespace CalcState
         #endregion  // フィールド
 
         #region 公開メソッド
-
         /// <summary>
         /// 数字が入力された。
         /// </summary>
