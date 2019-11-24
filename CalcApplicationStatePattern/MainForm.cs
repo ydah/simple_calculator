@@ -1,209 +1,313 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using CalcState;
 
-internal enum CalcType
+namespace CalcApplication
 {
-    Undefined = -1,
-    Sum = 0,
-    Minus,
-    Times,
-    Divide
-};
-
-namespace simple_calculator
-{
-    public partial class MainForm : Form
+    #region メイン画面クラス
+    /// <summary>
+    /// メイン画面クラス
+    /// </summary>
+    internal partial class MainForm : Form
     {
-        private double calcResult = 0;
-        private CalcType calcSignType = CalcType.Undefined;
-        private bool isAppendingMode = false;
-        private bool isBeforeCalc = true;
-        private static readonly Dictionary<string, CalcType> constCalcTypeTable = new Dictionary<string, CalcType>
-        {
-            { "＋", CalcType.Sum    },
-            { "－", CalcType.Minus  },
-            { "×", CalcType.Times  },
-            { "÷", CalcType.Divide },
-        };
-
-        public MainForm()
+        #region コンストラクタ
+        /// <summary>
+        /// <see cref="MainForm"/>クラスの新しいインスタンスを初期化する。
+        /// </summary>
+        internal MainForm()
         {
             InitializeComponent();
         }
+        #endregion  // コンストラクタ
 
-        private void MainFrom_Load(object sender, EventArgs e)
+        #region フィールド
+        /// <summary>
+        /// 計算結果
+        /// </summary>
+        private static double calcResult = 0;
+        /// <summary>
+        /// 符号種別
+        /// </summary>
+        private static Defines.ConstDefines.CalcType calcOperationType = Defines.ConstDefines.CalcType.Undefined;
+        /// <summary>
+        /// 状態管理クラス
+        /// </summary>
+        private static CalcStateManage context = null;
+        #endregion  // フィールド
+
+        #region 公開メソッド
+        /// <summary>
+        /// 計算結果エリアに数字を格納する。
+        /// </summary>
+        /// <param name="text">格納する数字</param>
+        internal void UpdateResultArea(string text)
         {
+            resultDispArea.Text = text;
         }
 
-        private void NumberButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 計算結果エリアに数字もしくは符号を追加する。
+        /// </summary>
+        /// <param name="text">追加する数字もしくは符号</param>
+        internal void AppendResultArea(string text)
         {
-            if ((((Button)sender).Text == "0") && (resultDispArea.Text.Length == 0))
+            resultDispArea.AppendText(text);
+        }
+
+        /// <summary>
+        /// 計算結果エリアをクリアする。
+        /// </summary>
+        internal void ClearResultArea()
+        {
+            resultDispArea.Text = Defines.ConstDefines.InitCalcResultDisp;
+        }
+
+        /// <summary>
+        /// 計算結果エリアの文字数を取得する。
+        /// </summary>
+        /// <returns>計算結果エリアの文字数</returns>
+        internal int getLengthResultArea()
+        {
+            return resultDispArea.Text.Length;
+        }
+
+        /// <summary>
+        /// 計算結果エリアが初期状態か？
+        /// </summary>
+        /// <returns>初期状態か否か。true:初期状態 false:初期状態でない</returns>
+        internal bool IsInitialValueResultArea()
+        {
+            return ((resultDispArea.Text.Length == 1) && (resultDispArea.Text == Defines.ConstDefines.InitCalcResultDisp));
+        }
+
+        /// <summary>
+        /// 計算式表示エリアに数式を追加する。
+        /// </summary>
+        /// <param name="text">追加する数式</param>
+        internal void AppendFormulaDisplayArea(string text)
+        {
+            formulaDispArea.AppendText(text);
+        }
+
+        /// <summary>
+        /// 計算式表示エリアに計算結果エリアに表示している文字を追加する。
+        /// </summary>
+        internal void AppendFormulaDisplayAreaFromResultArea()
+        {
+            if (resultDispArea.Text.EndsWith("."))
             {
-                return;
+                DeleteLastChar();
             }
 
-            AppendResultDispArea(((Button)sender).Text);
+            formulaDispArea.AppendText(resultDispArea.Text);
         }
 
-        private void CalcTypeSign_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 計算式表示エリアをクリアする。
+        /// </summary>
+        internal void ClearFormulaArea()
         {
-            SetCalcTypeFromText(((Button)sender).Text);
-            AppendFormulaDisplayArea(resultDispArea.Text);
-            AppendFormulaDisplayArea(((Button)sender).Text);
-            if (isBeforeCalc)
-            {
-                calcResult = Convert.ToDouble(resultDispArea.Text);
-                isAppendingMode = true;
-                isBeforeCalc = false;
-                return;
-            }
-            CalcResult();
-        }
-        private void SignToggleButton_Click(object sender, EventArgs e)
-        {
-            double currentValue = Convert.ToDouble(resultDispArea.Text);
-            currentValue *= -1;
-            resultDispArea.Text = currentValue.ToString();
-
-        }
-
-        private void DecimalPointButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CEButton_Click(object sender, EventArgs e)
-        {
-            resultDispArea.Text = "0";
             formulaDispArea.ResetText();
+        }
+
+        /// <summary>
+        /// 計算結果を計算結果表示エリアに表示している値で更新する。
+        /// </summary>
+        internal void UpdateCalcResult()
+        {
+            calcResult = Convert.ToDouble(resultDispArea.Text);
+        }
+
+        /// <summary>
+        /// 全ての表示エリアと計算結果をリセットする。
+        /// </summary>
+        internal void ResetAll()
+        {
+            ClearResultArea();
+            ClearFormulaArea();
             calcResult = 0;
-            isBeforeCalc = true;
         }
 
-        private void CButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 計算を実施する
+        /// </summary>
+        internal void Calculate()
         {
-            resultDispArea.Text = "0";
-        }
-
-        private void BackSpaceButton_Click(object sender, EventArgs e)
-        {
-            if (resultDispArea.Text.Length <= 1)
+            // 符号種別に応じた演算を行う
+            switch (calcOperationType)
             {
-                resultDispArea.Text = "0";
-                return;
+                // 足し算の場合
+                case Defines.ConstDefines.CalcType.Sum:
+                    calcResult += Convert.ToDouble(resultDispArea.Text);
+                    break;
+                // 引き算の場合
+                case Defines.ConstDefines.CalcType.Minus:
+                    calcResult -= Convert.ToDouble(resultDispArea.Text);
+                    break;
+                // 掛け算の場合
+                case Defines.ConstDefines.CalcType.Multiple:
+                    calcResult *= Convert.ToDouble(resultDispArea.Text);
+                    break;
+                // 割り算の場合
+                case Defines.ConstDefines.CalcType.Divide:
+                    calcResult /= Convert.ToDouble(resultDispArea.Text);
+                    break;
+                // ここに来るのはあり得ない
+                default:
+                    break;
+            }
+            // 計算結果を計算結果表示エリアに表示する
+            resultDispArea.Text = calcResult.ToString();
+            calcOperationType = Defines.ConstDefines.CalcType.Undefined;
+        }
+
+        /// <summary>
+        /// 符号を変更する
+        /// </summary>
+        /// <param name="operation">変更後の符号</param>
+        internal void ChangeOperation(string operation)
+        {
+            if (calcOperationType != Defines.ConstDefines.CalcType.Undefined)
+            {
+                formulaDispArea.Text = formulaDispArea.Text.Remove(formulaDispArea.Text.Length - 1);
             }
 
+            AppendFormulaDisplayArea(operation);
+            SetCalcOperationFromText(operation);
+        }
+
+        /// <summary>
+        /// 押されたボタンに対応する符号種別を取得する
+        /// </summary>
+        /// <param name="operation">変更後の符号</param>
+        internal void SetCalcOperationFromText(string operation)
+        {
+            calcOperationType = Defines.ConstDefines.OperationTypeTable[operation];
+        }
+
+        /// <summary>
+        /// 計算結果画面に表示している数字の正負を切り替える
+        /// </summary>
+        internal void TogglePositiveAndNegative()
+        {
+            // 計算結果エリアで表示している数字を取得し、数値に変換する
+            double tmpValue = Convert.ToDouble(resultDispArea.Text);
+            // 数値の正負を切り替えて計算結果エリアに戻す
+            tmpValue *= -1;
+            resultDispArea.Text = tmpValue.ToString();
+        }
+
+        /// <summary>
+        /// 計算結果表示画面の一番後ろの文字を削除する
+        /// </summary>
+        internal void DeleteLastChar()
+        {
             resultDispArea.Text = resultDispArea.Text.Remove(resultDispArea.Text.Length - 1);
         }
 
-        private void ResultDisplayButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 計算結果表示エリアに小数点が含まれているか？
+        /// </summary>
+        /// <returns>小数点が含まれているか否か？ true:含まれている false:含まれていない</returns>
+        internal bool IsContainDecimalPoint()
         {
-            if (formulaDispArea.Text.Length == 0)
-                return;
+            return resultDispArea.Text.Contains(".");
+        }
+        #endregion  // 公開メソッド
 
-            AppendFormulaDisplayArea(resultDispArea.Text);
-            CalcResult();
-            formulaDispArea.ResetText();
-            calcResult = 0;
-            isBeforeCalc = true;
+        #region プライベートメソッド（イベントハンドラ）
+        /// <summary>
+        /// フォームを読み込む
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            context = new CalcStateManage(this);
         }
 
-        private void AppendResultDispArea(string word)
+        /// <summary>
+        /// 数字ボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void NumberButton_Click(object sender, EventArgs e)
         {
-            if (isAppendingMode)
-            {
-                resultDispArea.Text = word;
-                isAppendingMode = false;
-                return;
-            }
-
-            if (resultDispArea.Text.Length > resultDispArea.MaxLength)
-            {
-                return;
-            }
-
-            if ((resultDispArea.Text.Length == 1) && (resultDispArea.Text == "0"))
-            {
-                resultDispArea.Text = word;
-            }
-            else
-            {
-                resultDispArea.AppendText(word);
-            }
+            Button clickedBtn = (Button)sender;
+            context.InputNumber(clickedBtn.Text);
         }
 
-        private void AppendFormulaDisplayArea(string chars)
+        /// <summary>
+        /// 計算符号ボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void CalcTypeSign_Click(object sender, EventArgs e)
         {
-            formulaDispArea.AppendText(chars);
+            Button clickedBtn = (Button)sender;
+            context.InputCalcOperation(clickedBtn.Text);
         }
 
-        private void CalcResult()
+        /// <summary>
+        /// ＝ボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void CalculateButton_Click(object sender, EventArgs e)
         {
-            switch (calcSignType) {
-                case CalcType.Sum:
-                    calcResult += Convert.ToDouble(resultDispArea.Text);
-                    break;
-                case CalcType.Minus:
-                    calcResult -= Convert.ToDouble(resultDispArea.Text);
-                    break;
-                case CalcType.Times:
-                    calcResult *= Convert.ToDouble(resultDispArea.Text);
-                    break;
-                case CalcType.Divide:
-                    calcResult /= Convert.ToDouble(resultDispArea.Text);
-                    break;
-                default:
-                    resultDispArea.Text = "Fatal";
-                    break;
-            }
-
-            if (calcResult.ToString().Length > resultDispArea.MaxLength)
-            {
-                resultDispArea.Text = calcResult.ToString().Remove(calcResult.ToString().Length - (calcResult.ToString().Length - resultDispArea.MaxLength));
-                formulaDispArea.Text = "Over Flow";
-                calcResult = 0;
-                isBeforeCalc = true;
-                return;
-            }
-            resultDispArea.Text = calcResult.ToString();
-            isAppendingMode = true;
-            calcSignType = CalcType.Undefined;
+            context.InputCalculate();
         }
 
-        private void ChangeOperation(string operation)
+        /// <summary>
+        /// Cボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void CButton_Click(object sender, EventArgs e)
         {
-            if (calcSignType != CalcType.Undefined)
-                formulaDispArea.Text = formulaDispArea.Text.Remove(formulaDispArea.Text.Length - 1);
-
-            AppendFormulaDisplayArea(operation);
+            context.InputCButton();
         }
 
-        private void SetCalcTypeFromText(string text)
+        /// <summary>
+        /// CEボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void CEButton_Click(object sender, EventArgs e)
         {
-            calcSignType = constCalcTypeTable[text];
+            context.InputCEButton();
         }
 
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// ←ボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void BackSpaceButton_Click(object sender, EventArgs e)
         {
-            if ((e.KeyCode < Keys.D0) || (e.KeyCode > Keys.D9))
-            {
-                return;
-            }
-
-            string downKey = (e.KeyCode - Keys.D0).ToString();
-            if ((downKey == "0") && (resultDispArea.Text.Length == 0))
-            {
-                return;
-            }
-
-            AppendResultDispArea(downKey);
+            context.InputBackSpace();
         }
+
+        /// <summary>
+        /// 正負切り替えボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void SignToggleButton_Click(object sender, EventArgs e)
+        {
+            context.InputSignToggle();
+        }
+
+        /// <summary>
+        /// 小数点"."ボタンがクリックされた
+        /// </summary>
+        /// <param name="sender">イベントのソース</param>
+        /// <param name="e">イベントデータ</param>
+        private void DecimalPointButton_Click(object sender, EventArgs e)
+        {
+            context.InputDecimalPoint();
+        }
+        #endregion  // プライベートメソッド（イベントハンドラ）
     }
+    #endregion  // メイン画面クラス
 }

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{20021EC3-12A3-4D70-8982-EE222A7410FC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>simple_calculator</RootNamespace>
+    <RootNamespace>CalcApplication</RootNamespace>
     <AssemblyName>simple_calculator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -61,6 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalcState\CalcStateManage.cs" />
+    <Compile Include="CalcState\DoCalcState.cs" />
+    <Compile Include="CalcState\InitialState.cs" />
+    <Compile Include="CalcState\StateInterFace.cs" />
+    <Compile Include="CalcState\WaitOperationInputState.cs" />
+    <Compile Include="CalcState\WaitRightNumInputState.cs" />
+    <Compile Include="ConstDefines.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +88,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
