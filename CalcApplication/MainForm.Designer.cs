@@ -1,4 +1,4 @@
-﻿namespace simple_calculator
+﻿namespace CalcApplication
 {
     partial class MainForm
     {
@@ -337,7 +337,7 @@
             this.resultDisplayButton.TabIndex = 22;
             this.resultDisplayButton.Text = "＝";
             this.resultDisplayButton.UseVisualStyleBackColor = true;
-            this.resultDisplayButton.Click += new System.EventHandler(this.ResultDisplayButton_Click);
+            this.resultDisplayButton.Click += new System.EventHandler(this.CalculateButton_Click);
             // 
             // formulaDispArea
             // 
@@ -354,7 +354,7 @@
             this.formulaDispArea.TabIndex = 23;
             this.formulaDispArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -386,11 +386,10 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(321, 393);
             this.MinimumSize = new System.Drawing.Size(321, 393);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "simple calculator";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
