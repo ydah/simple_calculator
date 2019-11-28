@@ -196,6 +196,7 @@ namespace CalcState
             {
                 form.ResetAll();
                 SetCalcState(ConstDefines.CalcState.Initaial);
+                return;
             }
             form.DeleteLastChar();
         }
@@ -228,7 +229,7 @@ namespace CalcState
             form.ClearResultArea();
             if (form.IsInitialValueResultArea() && (num == ConstDefines.InitCalcResultDisp))
             {
-
+                return;
             }
             form.UpdateResultArea(num);
             SetCalcState(ConstDefines.CalcState.Calulable);
@@ -314,6 +315,7 @@ namespace CalcState
             if (!form.Calculate())
             {
                 SetCalcState(ConstDefines.CalcState.Initaial);
+                return;
             }
             form.AppendFormulaDisplayArea(operation);
             form.SetCalcOperationFromText(operation);
@@ -329,6 +331,7 @@ namespace CalcState
             if (!form.Calculate())
             {
                 SetCalcState(ConstDefines.CalcState.Initaial);
+                return;
             }
             SetCalcState(ConstDefines.CalcState.Initaial);
         }
@@ -360,6 +363,7 @@ namespace CalcState
             {
                 form.ClearResultArea();
                 SetCalcState(ConstDefines.CalcState.WaitNumInputAfterOperation);
+                return;
             }
             form.DeleteLastChar();
 
