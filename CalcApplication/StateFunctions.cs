@@ -43,7 +43,7 @@ namespace CalcState
         /// 状態を取得する。
         /// </summary>
         /// <returns>現在の状態</returns>
-        internal ConstDefines.CalcState GetCalcState()
+        internal ConstDefines.CalcState GetState()
         {
             return this.state;
         }
@@ -52,7 +52,7 @@ namespace CalcState
         /// 状態を設定する。
         /// </summary>
         /// <param name="state">設定する状態</param>
-        internal void SetCalcState(ConstDefines.CalcState state)
+        internal void SetState(ConstDefines.CalcState state)
         {
             this.state = state;
         }
@@ -61,7 +61,7 @@ namespace CalcState
         /// 数字が入力された。(初期状態クラス)
         /// </summary>
         /// <param name="num">入力された数字</param>
-        public void InputNumberEventInitialState(string num)
+        public void InputNumberInitialState(string num)
         {
             form.ResetAll();
             if (num == ConstDefines.InitCalcResultDisp)
@@ -70,25 +70,25 @@ namespace CalcState
             }
 
             form.UpdateResultArea(num);
-            SetCalcState(ConstDefines.CalcState.WaitOperation);
+            SetState(ConstDefines.CalcState.WaitOperation);
         }
 
         /// <summary>
         /// 計算符号が入力された。(初期状態クラス)
         /// </summary>
         /// <param name="operation">入力された計算符号</param>
-        public void InputCalcOperationEventInitialState(string operation)
+        public void InputCalcOperationInitialState(string operation)
         {
             form.ResetAll();
             form.AppendFormulaDisplayArea(Defines.ConstDefines.InitCalcResultDisp + operation);
             form.SetCalcOperationFromText(operation);
-            SetCalcState(ConstDefines.CalcState.WaitNumInputAfterOperation);
+            SetState(ConstDefines.CalcState.WaitNumInputAfterOperation);
         }
 
         /// <summary>
         /// ＝ボタンが入力された。(初期状態クラス)
         /// </summary>
-        public void InputCalculateEventInitialState()
+        public void InputCalculateInitialState()
         {
             form.ResetAll();
         }
@@ -96,7 +96,7 @@ namespace CalcState
         /// <summary>
         /// Cボタンが入力された。(初期状態クラス)
         /// </summary>
-        public void InputCButtonEventInitialState()
+        public void InputCButtonInitialState()
         {
             form.ResetAll();
         }
@@ -104,7 +104,7 @@ namespace CalcState
         /// <summary>
         /// CEボタンが入力された。(初期状態クラス)
         /// </summary>
-        public void InputCEButtonEventInitialState()
+        public void InputCEButtonInitialState()
         {
             form.ResetAll();
         }
@@ -112,7 +112,7 @@ namespace CalcState
         /// <summary>
         /// ←ボタンが入力された。(初期状態クラス)
         /// </summary>
-        public void InputBackSpaceEventInitialState()
+        public void InputBackSpaceInitialState()
         {
             // NOP
         }
@@ -120,7 +120,7 @@ namespace CalcState
         /// <summary>
         /// 正負切り替えボタンが入力された。(初期状態クラス)
         /// </summary>
-        public void InputSignToggleEventInitialState()
+        public void InputSignToggleInitialState()
         {
             if (form.IsInitialValueResultArea())
             {
@@ -128,24 +128,24 @@ namespace CalcState
             }
 
             form.TogglePositiveAndNegative();
-            SetCalcState(ConstDefines.CalcState.WaitOperation);
+            SetState(ConstDefines.CalcState.WaitOperation);
         }
 
         /// <summary>
         /// 小数点"."ボタンが入力された。(初期状態クラス)
         /// </summary>
-        public void InputDecimalPointEventInitialState()
+        public void InputDecimalPointInitialState()
         {
             form.ClearResultArea();
             form.AppendResultArea(ConstDefines.DecimalPoint);
-            SetCalcState(ConstDefines.CalcState.WaitOperation);
+            SetState(ConstDefines.CalcState.WaitOperation);
         }
 
         /// <summary>
         /// 数字が入力された。(符号入力待ち状態)
         /// </summary>
         /// <param name="num">入力された数字</param>
-        public void InputNumberEventWaitOperationInputState(string num)
+        public void InputNumberWaitOperationInputState(string num)
         {
             form.AppendResultArea(num);
         }
@@ -154,50 +154,50 @@ namespace CalcState
         /// 計算符号が入力された。(符号入力待ち状態)
         /// </summary>
         /// <param name="operation">入力された計算符号</param>
-        public void InputCalcOperationEventWaitOperationInputState(string operation)
+        public void InputCalcOperationWaitOperationInputState(string operation)
         {
             form.AppendFormulaDisplayAreaFromResultArea();
             form.AppendFormulaDisplayArea(operation);
             form.SetCalcOperationFromText(operation);
             form.UpdateCalcResult();
-            SetCalcState(ConstDefines.CalcState.WaitNumInputAfterOperation);
+            SetState(ConstDefines.CalcState.WaitNumInputAfterOperation);
         }
 
         /// <summary>
         /// ＝ボタンが入力された。(符号入力待ち状態)
         /// </summary>
-        public void InputCalculateEventWaitOperationInputState()
+        public void InputCalculateWaitOperationInputState()
         {
-            SetCalcState(ConstDefines.CalcState.Initaial);
+            SetState(ConstDefines.CalcState.Initaial);
         }
 
         /// <summary>
         /// Cボタンが入力された。(符号入力待ち状態)
         /// </summary>
-        public void InputCButtonEventWaitOperationInputState()
+        public void InputCButtonWaitOperationInputState()
         {
             form.ResetAll();
-            SetCalcState(ConstDefines.CalcState.Initaial);
+            SetState(ConstDefines.CalcState.Initaial);
         }
 
         /// <summary>
         /// CEボタンが入力された。(符号入力待ち状態)
         /// </summary>
-        public void InputCEButtonEventWaitOperationInputState()
+        public void InputCEButtonWaitOperationInputState()
         {
             form.ResetAll();
-            SetCalcState(ConstDefines.CalcState.Initaial);
+            SetState(ConstDefines.CalcState.Initaial);
         }
 
         /// <summary>
         /// ←ボタンが入力された。(符号入力待ち状態)
         /// </summary>
-        public void InputBackSpaceEventWaitOperationInputState()
+        public void InputBackSpaceWaitOperationInputState()
         {
             if (form.getLengthResultArea() <= 1)
             {
                 form.ResetAll();
-                SetCalcState(ConstDefines.CalcState.Initaial);
+                SetState(ConstDefines.CalcState.Initaial);
                 return;
             }
             form.DeleteLastChar();
@@ -206,7 +206,7 @@ namespace CalcState
         /// <summary>
         /// 正負切り替えボタンが入力された。(符号入力待ち状態)
         /// </summary>
-        public void InputSignToggleEventWaitOperationInputState()
+        public void InputSignToggleWaitOperationInputState()
         {
             form.TogglePositiveAndNegative();
         }
@@ -214,7 +214,7 @@ namespace CalcState
         /// <summary>
         /// 小数点"."ボタンが入力された。(符号入力待ち状態)
         /// </summary>
-        public void InputDecimalPointEventWaitOperationInputState()
+        public void InputDecimalPointWaitOperationInputState()
         {
             if (!form.IsContainDecimalPoint())
             {
@@ -226,7 +226,7 @@ namespace CalcState
         /// 数字が入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
         /// <param name="num">入力された数字</param>
-        public void InputNumberEventWaitNumInputAfterOperationState(string num)
+        public void InputNumberWaitNumInputAfterOperationState(string num)
         {
             form.ClearResultArea();
             if (form.IsInitialValueResultArea() && (num == ConstDefines.InitCalcResultDisp))
@@ -234,14 +234,14 @@ namespace CalcState
                 return;
             }
             form.UpdateResultArea(num);
-            SetCalcState(ConstDefines.CalcState.Calulable);
+            SetState(ConstDefines.CalcState.Calulable);
         }
 
         /// <summary>
         /// 計算符号が入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
         /// <param name="operation">入力された計算符号</param>
-        public void InputCalcOperationEventWaitNumInputAfterOperationState(string operation)
+        public void InputCalcOperationWaitNumInputAfterOperationState(string operation)
         {
             form.ChangeOperation(operation);
         }
@@ -249,25 +249,25 @@ namespace CalcState
         /// <summary>
         /// ＝ボタンが入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
-        public void InputCalculateEventWaitNumInputAfterOperationState()
+        public void InputCalculateWaitNumInputAfterOperationState()
         {
             form.ClearFormulaArea();
-            SetCalcState(ConstDefines.CalcState.Initaial);
+            SetState(ConstDefines.CalcState.Initaial);
         }
 
         /// <summary>
         /// Cボタンが入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
-        public void InputCButtonEventWaitNumInputAfterOperationState()
+        public void InputCButtonWaitNumInputAfterOperationState()
         {
             form.ResetAll();
-            SetCalcState(ConstDefines.CalcState.Initaial);
+            SetState(ConstDefines.CalcState.Initaial);
         }
 
         /// <summary>
         /// CEボタンが入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
-        public void InputCEButtonEventWaitNumInputAfterOperationState()
+        public void InputCEButtonWaitNumInputAfterOperationState()
         {
             form.ClearResultArea();
         }
@@ -275,7 +275,7 @@ namespace CalcState
         /// <summary>
         /// ←ボタンが入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
-        public void InputBackSpaceEventWaitNumInputAfterOperationState()
+        public void InputBackSpaceWaitNumInputAfterOperationState()
         {
             // NOP
         }
@@ -283,7 +283,7 @@ namespace CalcState
         /// <summary>
         /// 正負切り替えボタンが入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
-        public void InputSignToggleEventWaitNumInputAfterOperationState()
+        public void InputSignToggleWaitNumInputAfterOperationState()
         {
             // NOP
         }
@@ -291,18 +291,18 @@ namespace CalcState
         /// <summary>
         /// 小数点"."ボタンが入力された。(符号入力後、数値入力待ち状態)
         /// </summary>
-        public void InputDecimalPointEventWaitNumInputAfterOperationState()
+        public void InputDecimalPointWaitNumInputAfterOperationState()
         {
             form.ClearResultArea();
             form.AppendResultArea(ConstDefines.DecimalPoint);
-            SetCalcState(ConstDefines.CalcState.Calulable);
+            SetState(ConstDefines.CalcState.Calulable);
         }
 
         /// <summary>
         /// 数字が入力された。(計算可能状態)
         /// </summary>
         /// <param name="num">入力された数字</param>
-        public void InputNumberEventCalculableState(string num)
+        public void InputNumberCalculableState(string num)
         {
             form.AppendResultArea(num);
         }
@@ -311,60 +311,60 @@ namespace CalcState
         /// 計算符号が入力された。(計算可能状態)
         /// </summary>
         /// <param name="operation">入力された計算符号</param>
-        public void InputCalcOperationEventCalculableState(string operation)
+        public void InputCalcOperationCalculableState(string operation)
         {
             form.AppendFormulaDisplayAreaFromResultArea();
             if (!form.Calculate())
             {
-                SetCalcState(ConstDefines.CalcState.Initaial);
+                SetState(ConstDefines.CalcState.Initaial);
                 return;
             }
             form.AppendFormulaDisplayArea(operation);
             form.SetCalcOperationFromText(operation);
-            SetCalcState(ConstDefines.CalcState.WaitNumInputAfterOperation);
+            SetState(ConstDefines.CalcState.WaitNumInputAfterOperation);
         }
 
         /// <summary>
         /// ＝ボタンが入力された。(計算可能状態)
         /// </summary>
-        public void InputCalculateEventCalculableState()
+        public void InputCalculateCalculableState()
         {
             form.ClearFormulaArea();
             if (!form.Calculate())
             {
-                SetCalcState(ConstDefines.CalcState.Initaial);
+                SetState(ConstDefines.CalcState.Initaial);
                 return;
             }
-            SetCalcState(ConstDefines.CalcState.Initaial);
+            SetState(ConstDefines.CalcState.Initaial);
         }
 
         /// <summary>
         /// Cボタンが入力された。(計算可能状態)
         /// </summary>
-        public void InputCButtonEventCalculableState()
+        public void InputCButtonCalculableState()
         {
             form.ResetAll();
-            SetCalcState(ConstDefines.CalcState.Initaial);
+            SetState(ConstDefines.CalcState.Initaial);
         }
 
         /// <summary>
         /// CEボタンが入力された。(計算可能状態)
         /// </summary>
-        public void InputCEButtonEventCalculableState()
+        public void InputCEButtonCalculableState()
         {
             form.ClearResultArea();
-            SetCalcState(ConstDefines.CalcState.WaitNumInputAfterOperation);
+            SetState(ConstDefines.CalcState.WaitNumInputAfterOperation);
         }
 
         /// <summary>
         /// ←ボタンが入力された。(計算可能状態)
         /// </summary>
-        public void InputBackSpaceEventCalculableState()
+        public void InputBackSpaceCalculableState()
         {
             if (form.getLengthResultArea() <= 1)
             {
                 form.ClearResultArea();
-                SetCalcState(ConstDefines.CalcState.WaitNumInputAfterOperation);
+                SetState(ConstDefines.CalcState.WaitNumInputAfterOperation);
                 return;
             }
             form.DeleteLastChar();
@@ -373,7 +373,7 @@ namespace CalcState
         /// <summary>
         /// 正負切り替えボタンが入力された。(計算可能状態)
         /// </summary>
-        public void InputSignToggleEventCalculableState()
+        public void InputSignToggleCalculableState()
         {
             form.TogglePositiveAndNegative();
         }
@@ -381,7 +381,7 @@ namespace CalcState
         /// <summary>
         /// 小数点"."ボタンが入力された。(計算可能状態)
         /// </summary>
-        public void InputDecimalPointEventCalculableState()
+        public void InputDecimalPointCalculableState()
         {
             if (!form.IsContainDecimalPoint())
             {

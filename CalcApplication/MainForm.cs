@@ -252,31 +252,31 @@ namespace CalcApplication
         private void NumberButton_Click(object sender, EventArgs e)
         {
             Button clickedBtn = (Button)sender;
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputNumberEventInitialState(clickedBtn.Text);
+                        state.InputNumberInitialState(clickedBtn.Text);
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputNumberEventWaitOperationInputState(clickedBtn.Text);
+                        state.InputNumberWaitOperationInputState(clickedBtn.Text);
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputNumberEventWaitNumInputAfterOperationState(clickedBtn.Text);
+                        state.InputNumberWaitNumInputAfterOperationState(clickedBtn.Text);
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputNumberEventCalculableState(clickedBtn.Text);
+                        state.InputNumberCalculableState(clickedBtn.Text);
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
@@ -290,31 +290,31 @@ namespace CalcApplication
         private void CalcTypeSign_Click(object sender, EventArgs e)
         {
             Button clickedBtn = (Button)sender;
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputCalcOperationEventInitialState(clickedBtn.Text);
+                        state.InputCalcOperationInitialState(clickedBtn.Text);
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputCalcOperationEventWaitOperationInputState(clickedBtn.Text);
+                        state.InputCalcOperationWaitOperationInputState(clickedBtn.Text);
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputCalcOperationEventWaitNumInputAfterOperationState(clickedBtn.Text);
+                        state.InputCalcOperationWaitNumInputAfterOperationState(clickedBtn.Text);
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputCalcOperationEventCalculableState(clickedBtn.Text);
+                        state.InputCalcOperationCalculableState(clickedBtn.Text);
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
@@ -327,31 +327,31 @@ namespace CalcApplication
         /// <param name="e">イベントデータ</param>
         private void CalculateButton_Click(object sender, EventArgs e)
         {
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputCalculateEventInitialState();
+                        state.InputCalculateInitialState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputCalculateEventWaitOperationInputState();
+                        state.InputCalculateWaitOperationInputState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputCalculateEventWaitNumInputAfterOperationState();
+                        state.InputCalculateWaitNumInputAfterOperationState();
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputCalculateEventCalculableState();
+                        state.InputCalculateCalculableState();
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
@@ -364,31 +364,31 @@ namespace CalcApplication
         /// <param name="e">イベントデータ</param>
         private void CButton_Click(object sender, EventArgs e)
         {
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputCButtonEventInitialState();
+                        state.InputCButtonInitialState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputCButtonEventWaitOperationInputState();
+                        state.InputCButtonWaitOperationInputState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputCButtonEventWaitNumInputAfterOperationState();
+                        state.InputCButtonWaitNumInputAfterOperationState();
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputCButtonEventCalculableState();
+                        state.InputCButtonCalculableState();
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
@@ -401,31 +401,31 @@ namespace CalcApplication
         /// <param name="e">イベントデータ</param>
         private void CEButton_Click(object sender, EventArgs e)
         {
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputCEButtonEventInitialState();
+                        state.InputCEButtonInitialState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputCEButtonEventWaitOperationInputState();
+                        state.InputCEButtonWaitOperationInputState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputCEButtonEventWaitNumInputAfterOperationState();
+                        state.InputCEButtonWaitNumInputAfterOperationState();
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputCEButtonEventCalculableState();
+                        state.InputCEButtonCalculableState();
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
@@ -438,31 +438,31 @@ namespace CalcApplication
         /// <param name="e">イベントデータ</param>
         private void BackSpaceButton_Click(object sender, EventArgs e)
         {
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputBackSpaceEventInitialState();
+                        state.InputBackSpaceInitialState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputBackSpaceEventWaitOperationInputState();
+                        state.InputBackSpaceWaitOperationInputState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputBackSpaceEventWaitNumInputAfterOperationState();
+                        state.InputBackSpaceWaitNumInputAfterOperationState();
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputBackSpaceEventCalculableState();
+                        state.InputBackSpaceCalculableState();
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
@@ -475,31 +475,31 @@ namespace CalcApplication
         /// <param name="e">イベントデータ</param>
         private void SignToggleButton_Click(object sender, EventArgs e)
         {
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputSignToggleEventInitialState();
+                        state.InputSignToggleInitialState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputSignToggleEventWaitOperationInputState();
+                        state.InputSignToggleWaitOperationInputState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputSignToggleEventWaitNumInputAfterOperationState();
+                        state.InputSignToggleWaitNumInputAfterOperationState();
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputSignToggleEventCalculableState();
+                        state.InputSignToggleCalculableState();
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
@@ -512,31 +512,31 @@ namespace CalcApplication
         /// <param name="e">イベントデータ</param>
         private void DecimalPointButton_Click(object sender, EventArgs e)
         {
-            switch (state.GetCalcState())
+            switch (state.GetState())
             {
                 case ConstDefines.CalcState.Initaial:
                     {
-                        state.InputDecimalPointEventInitialState();
+                        state.InputDecimalPointInitialState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitOperation:
                     {
-                        state.InputDecimalPointEventWaitOperationInputState();
+                        state.InputDecimalPointWaitOperationInputState();
                         break;
                     }
                 case ConstDefines.CalcState.WaitNumInputAfterOperation:
                     {
-                        state.InputDecimalPointEventWaitNumInputAfterOperationState();
+                        state.InputDecimalPointWaitNumInputAfterOperationState();
                         break;
                     }
                 case ConstDefines.CalcState.Calulable:
                     {
-                        state.InputDecimalPointEventCalculableState();
+                        state.InputDecimalPointCalculableState();
                         break;
                     }
                 default:
                     {
-                        state.SetCalcState(ConstDefines.CalcState.Initaial);
+                        state.SetState(ConstDefines.CalcState.Initaial);
                         break;
                     }
             }
