@@ -96,7 +96,7 @@ namespace CalcState
         /// </summary>
         public StateIF InputBackSpaceEvent()
         {
-            if ((form.getLengthResultArea() - 1) <= 1)
+            if (form.getLengthResultArea() <= 1)
             {
                 form.ClearResultArea();
                 return new WaitNumInputAfterOperationState(form);
