@@ -21,6 +21,18 @@ namespace Defines
         };
 
         /// <summary>
+        /// 計算機状態
+        /// </summary>
+        internal enum CalcState
+        {
+            Initaial = 0,
+            WaitOperation,
+            WaitNumInputAfterOperation,
+            Calulable,
+
+        };
+
+        /// <summary>
         /// 符号文字から計算種別を取得する変換テーブル。
         /// </summary>
         /// <value></value>
