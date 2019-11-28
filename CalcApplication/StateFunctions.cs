@@ -20,9 +20,11 @@ namespace CalcState
         {
             form = mainForm;
         }
+
         #endregion コンストラクタ
 
         #region フィールド
+
         /// <summary>
         /// メインフォームクラスインスタンス
         /// </summary>
@@ -192,7 +194,7 @@ namespace CalcState
         /// </summary>
         public void InputBackSpaceEventWaitOperationInputState()
         {
-            if ((form.getLengthResultArea() - 1) <= 1)
+            if (form.getLengthResultArea() <= 1)
             {
                 form.ResetAll();
                 SetCalcState(ConstDefines.CalcState.Initaial);
@@ -359,14 +361,13 @@ namespace CalcState
         /// </summary>
         public void InputBackSpaceEventCalculableState()
         {
-            if ((form.getLengthResultArea() - 1) <= 1)
+            if (form.getLengthResultArea() <= 1)
             {
                 form.ClearResultArea();
                 SetCalcState(ConstDefines.CalcState.WaitNumInputAfterOperation);
                 return;
             }
             form.DeleteLastChar();
-
         }
 
         /// <summary>

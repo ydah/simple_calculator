@@ -233,6 +233,7 @@ namespace CalcApplication
         #endregion 公開メソッド
 
         #region プライベートメソッド（イベントハンドラ）
+
         /// <summary>
         /// フォームを読み込む
         /// </summary>
